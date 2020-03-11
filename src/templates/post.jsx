@@ -98,9 +98,6 @@ export const query = graphql`
           currency
           price
           image
-          attributes {
-            name
-          }
           inventory {
             quantity
           }
