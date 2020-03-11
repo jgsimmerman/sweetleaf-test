@@ -23,11 +23,10 @@ export default async function updateShipping({ stripeApiSecret, body, verbose })
 		{
       id: `shipping-0`,
       description: `Standard Shipping`,
-      value: (subtotal, /*skuMatch*/) => {
-        // if (skuMatch) {
-				// 	return 0
-				// } else 
-				if (subtotal < 1000) {
+      value: (subtotal, skuMatch) => {
+        if (skuMatch) {
+					return 0
+				} else if (subtotal < 1000) {
           return 549
         } else if (subtotal < 3000) {
           return 749
@@ -138,7 +137,7 @@ export default async function updateShipping({ stripeApiSecret, body, verbose })
 
 	
 	shippingMethods = shippingOptions.map(option => 		
-		option.value(subtotal)
+		option.value(subtotal, skuMatch)
 		)
 	let ship = JSON.parse(JSON.stringify(shippingMethods))
 	let ship0 = ship[0]
